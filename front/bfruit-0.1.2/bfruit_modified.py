@@ -59,6 +59,7 @@ class Menu:
         szam = 0
         szamlalo = 0
         self.showhs = False # show hs in menu
+        plc = Game()  # R4 modification
         while True:
             for self.event in pygame.event.get():
                 if self.selectedmenu == 2:
@@ -264,7 +265,7 @@ class Game:
         self.mut = 0
         self.wins = [0, 0, 0, 0, 0]
         self.keys = 1
-        self.credit = 20
+        self.credit = 5
         self.bet = 1
         self.lastwin = 0
         self.show = []
@@ -303,59 +304,52 @@ class Game:
         
         # mainloop
         while True:
+            quit = False
+            begin = True
+            wheel = True
+            key_up = True
+            return_key = False
             self.screen.fill([0, 0, 0])
             self.screen.blit(self.background, (0, 0))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.bgsound.stop()
-                    exit()
-                    
-                if event.type == pygame.KEYDOWN:
-                    self.bsound.play()
-                    if event.key == pygame.K_LEFT and self.keys == 1:
-                        if self.credit > 0:
-                            if self.credit - self.bet < 0:
-                                self.bet = self.credit
-                            self.credit = self.credit - self.bet
-                            self.randi()
-                            self.check()
-                            self.roll(img)
-                            self.screen.blit(self.background, (0, 0))
-                            self.drawl()
-                            self.winner()
-                        elif self.credit == 0 and self.bet == 0:
-                            self.bgsound.stop()
-                            plc = Menu()
-                            
+            print("Entrei no loop do jogo")
+            if quit:
+                self.bgsound.stop()
+                exit()
+
+            if begin:
+                self.bsound.play()
+                print ("tocando o som")
+                if wheel:
                     if self.credit > 0:
-                        if event.key == pygame.K_UP and self.keys == 1:
-                            if self.credit - self.bet - 1 >= 0:
-                                self.bet = self.bet + 1
-                            else:
-                                self.bet = 1
-                            if self.bet == 11:
-                                self.bet = 1
-                            
-                    else:
-                        self.bet = 0
-                            
-                            
-                    if event.key == pygame.K_F1:
-                        if self.keys == 1:
-                            self.keys = 0
-                            self.menu = "h"
-                        elif self.keys == 0:
-                            self.keys = 1
-                            self.menu = "n"
-                            
-                    if event.key == pygame.K_RETURN:
-                        self.keys = 0
-                        self.menu = "e"
-                      
-                    if event.key == pygame.K_ESCAPE and self.keys == 1:
+                        if self.credit - self.bet < 0:
+                            self.bet = self.credit
+                        self.credit = self.credit - self.bet
+                        self.randi()
+                        self.check()
+                        self.roll(img)
+                        self.screen.blit(self.background, (0, 0))
+                        self.drawl()
+                        self.winner()
+                    elif self.credit == 0 and self.bet == 0:
                         self.bgsound.stop()
                         plc = Menu()
-                            
+
+                if self.credit > 0:
+                    if key_up:
+                        if self.credit - self.bet - 1 >= 0:
+                            self.bet = self.bet + 1
+                        else:
+                            self.bet = 1
+                        if self.bet == 11:
+                            self.bet = 1
+
+                else:
+                    self.bet = 0
+
+                if return_key:
+                    self.keys = 0
+                    self.menu = "e"
+
             self.draw_side()
             
             if self.mut == 1:
@@ -377,6 +371,7 @@ class Game:
                 self.endthegame(scr)
             
             pygame.display.update()
+            time.sleep(5)
     
     def roll(self, img):
         szam = 0
@@ -491,7 +486,7 @@ class Game:
         self.screen.blit(text_surface, (470, 50))
         
         font = pygame.font.Font("data/LiberationSans-Regular.ttf", 15)
-        text_surface = font.render("Bet:", True, [230, 255, 255])
+        text_surface = font.render("Uso", True, [230, 255, 255])
         self.screen.blit(text_surface, (500, 185))
         # multip
         digifont = pygame.font.Font("data/DIGITAL2.ttf",24)
@@ -501,7 +496,7 @@ class Game:
         self.screen.blit(text_surface, (500, 210))
         
         font = pygame.font.Font("data/LiberationSans-Regular.ttf", 15)
-        text_surface = font.render("Winner Paid:", True, [230, 255, 255])
+        text_surface = font.render("Recompensa", True, [230, 255, 255])
         self.screen.blit(text_surface, (500, 255))
         # last win
         digifont = pygame.font.Font("data/DIGITAL2.ttf",24)
@@ -511,7 +506,7 @@ class Game:
         self.screen.blit(text_surface, (500, 280))
         
         font = pygame.font.Font("data/LiberationSans-Regular.ttf", 15)
-        text_surface = font.render("Credit:", True, [230, 255, 255])
+        text_surface = font.render("Quantidade de Lixo", True, [230, 255, 255])
         self.screen.blit(text_surface, (500, 325))
         # startsum
         digifont = pygame.font.Font("data/DIGITAL2.ttf",24)
