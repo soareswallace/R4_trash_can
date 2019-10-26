@@ -59,7 +59,7 @@ class Menu:
         szam = 0
         szamlalo = 0
         self.showhs = False # show hs in menu
-        plc = Game()  # R4 modification
+        plc = Game()  # R4 modification to handle direct to the game
         while True:
             for self.event in pygame.event.get():
                 if self.selectedmenu == 2:
@@ -359,7 +359,7 @@ class Game:
             
             if self.credit == 0 and self.bet == 0:
                 font = pygame.font.Font("data/LiberationSans-Regular.ttf", 55)
-                text_surface = font.render("Game Over", True, [255, 0, 0])
+                text_surface = font.render("Obrigado", True, [0, 255, 0])
                 self.screen.blit(text_surface, (70, 190))
             
             self.screen.blit(self.rlayer, (37, 48))
@@ -482,7 +482,7 @@ class Game:
         text_surface = digifont.render("88888888888", True, [60, 0, 0])
         self.screen.blit(text_surface, (470, 50))
         
-        text_surface = digifont.render("F1 FOR HELP", True, [255, 0, 0])
+        text_surface = digifont.render("JOGUE LIXO", True, [255, 0, 0])
         self.screen.blit(text_surface, (470, 50))
         
         font = pygame.font.Font("data/LiberationSans-Regular.ttf", 15)
@@ -836,8 +836,8 @@ if __name__ == "__main__":
                 screen.blit(sun, (0, 0))
                 szamsun = szamsun + 1
                 pygame.display.update()
-        if time.clock() - starttime > 5:
-            plc = Menu()
+        # if time.clock() - starttime > 5:
+        plc = Menu()
     
     
     
