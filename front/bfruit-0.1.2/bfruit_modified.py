@@ -59,7 +59,9 @@ class Menu:
         szam = 0
         szamlalo = 0
         self.showhs = False # show hs in menu
+        
         plc = Game()  # R4 modification to handle direct to the game
+
         while True:
             for self.event in pygame.event.get():
                 if self.selectedmenu == 2:
@@ -281,13 +283,13 @@ class Game:
         self.background = pygame.image.load("data/img/bg.png")
         self.rlayer = pygame.image.load("data/img/rlayer.png")
         self.windowlayer = pygame.image.load("data/img/windowlayer.png")
-        self.imgone = pygame.image.load("data/img/1.png")
-        self.imgtwo = pygame.image.load("data/img/2.png")
-        self.imgthree = pygame.image.load("data/img/3.png")
-        self.imgfour = pygame.image.load("data/img/4.png")
-        self.imgfive = pygame.image.load("data/img/5.png")
-        self.imgsix = pygame.image.load("data/img/6.png")
-        self.imgseven = pygame.image.load("data/img/7.png")
+        self.imgone = pygame.image.load("data/r4/1.png")
+        self.imgtwo = pygame.image.load("data/r4/2.png")
+        self.imgthree = pygame.image.load("data/r4/3.png")
+        self.imgfour = pygame.image.load("data/r4/4.png")
+        self.imgfive = pygame.image.load("data/r4/5.png")
+        self.imgsix = pygame.image.load("data/r4/6.png")
+        self.imgseven = pygame.image.load("data/r4/7.png")
         self.imgeight = pygame.image.load("data/img/8.png")
         
         img = []
@@ -303,7 +305,7 @@ class Game:
         self.bgsound.play(loops=-1)
         
         # mainloop
-        while True:
+        while True or credit > 0:
             quit = False
             begin = True
             wheel = True
