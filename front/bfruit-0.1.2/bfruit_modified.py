@@ -28,8 +28,48 @@ import time
 import os
 
 VERSION = "0.1.2"
+R4_COLOR = [0, 104, 60]
 
 # main menu###########################
+class Premio:
+    def __init__(self):
+        print("Entre na premiacao")
+        self.screen = screen
+        self.maincolor = [255, 255, 255]
+        self.white = [255, 255, 255]
+        self.background = pygame.image.load("data/premio/coxinha.png")
+        font = pygame.font.Font("data/LiberationSans-Regular.ttf", 35)
+        self.screen.fill(self.maincolor)
+        text_2 = font.render("Leve este codigo nos nossos parceiros", True, R4_COLOR)
+        self.screen.blit(text_2, (25, 50))
+        text_surface = font.render("Codigo: QXJR", True, R4_COLOR)
+        self.screen.blit(text_surface, (25, 230))
+        pygame.display.update()
+        self.screen.blit(self.background, (260, 200))
+        pygame.display.update()
+        time.sleep(30)
+        exit()
+
+class Obrigado:
+    def __init__(self):
+        print("Entre no agradecimento")
+        self.screen = screen
+        self.maincolor = [255, 255, 255]
+        self.white = [255, 255, 255]
+        self.background = pygame.image.load("data/r4/logo_no_fim.png")
+        font = pygame.font.Font("data/LiberationSans-Regular.ttf", 35)
+        self.screen.fill(self.maincolor)
+        text_2 = font.render("Tente outra vez! :-)", True, R4_COLOR)
+        self.screen.blit(text_2, (190, 100))
+        text_surface = font.render("Obrigado por ajudar o meio ambiente!", True, R4_COLOR)
+        self.screen.blit(text_surface, (30, 200))
+        pygame.display.update()
+        self.screen.blit(self.background, (206, 300))
+        pygame.display.update()
+        time.sleep(5)
+        exit()
+
+
 class Menu:
     def __init__(self):
         self.screen = screen
@@ -265,7 +305,7 @@ class Game:
         self.mut = 0
         self.wins = [0, 0, 0, 0, 0]
         self.keys = 1
-        self.credit = 5
+        self.credit = 2
         self.bet = 1
         self.lastwin = 0
         self.show = []
@@ -332,7 +372,9 @@ class Game:
                         self.winner()
                     elif self.credit == 0 and self.bet == 0:
                         self.bgsound.stop()
-                        plc = Menu()
+                        time.sleep(5)
+                        plc = Obrigado()
+                        exit()
 
                 if self.credit > 0:
                     if key_up:
@@ -358,9 +400,10 @@ class Game:
                 self.wins = [0, 0, 0, 0, 0]
             
             if self.credit == 0 and self.bet == 0:
-                font = pygame.font.Font("data/LiberationSans-Regular.ttf", 55)
-                text_surface = font.render("Obrigado", True, [0, 255, 0])
-                self.screen.blit(text_surface, (70, 190))
+                self.bgsound.stop()
+                pygame.display.update()
+                time.sleep(5)
+                plc = Obrigado()
             
             self.screen.blit(self.rlayer, (37, 48))
             self.screen.blit(self.windowlayer, (0, 0))
@@ -588,8 +631,14 @@ class Game:
             if winsum > self.bet:
                 self.credit = self.credit + winsum
                 self.lastwin = self.lastwin + winsum
+                print("Teve um vencedor")
                 self.beepsound.play()
-            
+                font = pygame.font.Font("data/LiberationSans-Regular.ttf", 55)
+                text_surface = font.render("Voce ganhou, pegue seu QR Code", True, [0, 255, 0])
+                self.screen.blit(text_surface, (70, 190))
+                time.sleep(5)
+                plc = Premio()
+
     def helpmenu(self):
         pygame.draw.line(self.screen, [176, 176, 176], (50, 250), (590, 250), 400)
         font = pygame.font.Font("data/LiberationSans-Regular.ttf", 15)
@@ -677,7 +726,7 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode([640, 480], 0, 24)
     pygame.display.set_caption("BFruit")
     pygame.mouse.set_visible(False)
-    
+
     # intro
     border = pygame.image.load("data/intro/border.png").convert()
     point = pygame.image.load("data/intro/point.png").convert()
