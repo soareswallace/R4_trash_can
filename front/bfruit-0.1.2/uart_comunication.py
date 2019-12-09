@@ -17,7 +17,7 @@ while True:
    if GPIO.input(15) == False:
       print("passou lixo")
       run(game_commands)
-      time.sleep(10)
+      time.sleep(2)
    else:
       print("---------")
 

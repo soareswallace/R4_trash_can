@@ -20,7 +20,7 @@
 
 import pygame
 from pygame.locals import *
-from random import randrange
+from random import randrange, randint
 import sys
 from sys import argv
 from getopt import getopt, GetoptError
@@ -34,18 +34,35 @@ R4_COLOR = [0, 104, 60]
 class Premio:
     def __init__(self):
         print("Entre na premiacao")
+        mapPrizes = {
+            0: {
+                    "qrcode": "data/premio/coxinha.png",
+                    "codigo": "Codigo: COXX"
+                },
+            1: {
+                "qrcode": "data/premio/metro.png",
+                "codigo": "Codigo: METX"
+            },
+            2: {
+                "qrcode": "data/premio/pipoca.png",
+                "codigo": "Codigo: PIPX"
+            }
+        }
+        prizeNumber = randint(0, 2)
         self.screen = screen
         self.maincolor = [255, 255, 255]
         self.white = [255, 255, 255]
-        self.background = pygame.image.load("data/premio/coxinha.png")
         font = pygame.font.Font("data/LiberationSans-Regular.ttf", 35)
+        qrcode = pygame.image.load(mapPrizes[prizeNumber]["qrcode"])
+        logo = pygame.image.load("data/r4/logo_no_fim.png")
+        codigo = font.render(mapPrizes[prizeNumber]["codigo"], True, R4_COLOR)
         self.screen.fill(self.maincolor)
         text_2 = font.render("Leve este codigo nos nossos parceiros", True, R4_COLOR)
         self.screen.blit(text_2, (25, 50))
-        text_surface = font.render("Codigo: QXJR", True, R4_COLOR)
-        self.screen.blit(text_surface, (25, 230))
+        self.screen.blit(codigo, (25, 210))
         pygame.display.update()
-        self.screen.blit(self.background, (260, 200))
+        self.screen.blit(qrcode, (320, 120))
+        self.screen.blit(logo, (206, 320))
         pygame.display.update()
         time.sleep(30)
         exit()
@@ -56,7 +73,7 @@ class Obrigado:
         self.screen = screen
         self.maincolor = [255, 255, 255]
         self.white = [255, 255, 255]
-        self.background = pygame.image.load("data/r4/logo_no_fim.png")
+        logo = pygame.image.load("data/r4/logo_no_fim.png")
         font = pygame.font.Font("data/LiberationSans-Regular.ttf", 35)
         self.screen.fill(self.maincolor)
         text_2 = font.render("Tente outra vez! :-)", True, R4_COLOR)
@@ -64,7 +81,7 @@ class Obrigado:
         text_surface = font.render("Obrigado por ajudar o meio ambiente!", True, R4_COLOR)
         self.screen.blit(text_surface, (30, 200))
         pygame.display.update()
-        self.screen.blit(self.background, (206, 300))
+        self.screen.blit(logo, (206, 300))
         pygame.display.update()
         time.sleep(5)
         exit()
@@ -789,7 +806,7 @@ if __name__ == "__main__":
         screen.blit(point, (425, 240))
         screen.blit(point, (425, 270))
         szam = szam + 4
-        pygame.display.update()
+        # pygame.display.update()
     
     starttime = time.clock()
     
